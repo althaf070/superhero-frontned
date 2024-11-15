@@ -56,6 +56,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
         error: error.response?.data?.message || "Error signing up",
         isLoading: false,
       });
+      toast.error(error.response?.data?.message)
       throw error;
     }
   },
@@ -79,6 +80,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
         error: error.response?.data?.message || "Error logging in",
         isLoading: false,
       });
+      toast.error(error.response?.data?.message)
       throw error;
     }
   },
