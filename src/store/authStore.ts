@@ -4,7 +4,7 @@ import { SERVER_URL } from "@/lib/serverurl";
 import { toast } from "sonner";
 
 axios.defaults.withCredentials = true;
-
+axios.defaults.baseURL ='https://superhero-backend-7b38.onrender.com'
 interface User {
   _id: string;
   username: string;
