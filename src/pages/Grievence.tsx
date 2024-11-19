@@ -6,15 +6,18 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast } from "sonner"
 import { useAuthStore } from '@/store/authStore';
 import { Button } from '@/components/ui/button';
-
+import emailjs from '@emailjs/browser';
 interface FormData {
   grievanceType: string;
   description: string;
   location: string;
 }
+const serviceId='service_of4pt5f'
+const templateId = 'template_sv2m0p9'
+const publicKey = 'Pva-AyayBM1O1Jsx2'
 
 const Grievance = () => {
-  const {isAuthenticated} = useAuthStore()
+  const {isAuthenticated,user} = useAuthStore()
   const navigate  = useNavigate()
   const [formData, setFormData] = useState<FormData>({
     grievanceType: '',
@@ -23,6 +26,7 @@ const Grievance = () => {
   });
 
   const [isLoading, setisLoading] = useState(false);
+
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -36,6 +40,18 @@ const Grievance = () => {
       const response = await axios.post(`${SERVER_URL}/post`, formData, {
         withCredentials: true,
       });
+        // Prepare email parameters
+        const templateParams = {
+          from_name: user?.username,
+          grievanceType:formData.grievanceType,
+          location: formData.location,
+          message: formData.description,
+        }
+
+  
+        // Send email notification
+        await emailjs.send(serviceId, templateId, templateParams, publicKey);
+  
       toast.success(response.data.message)
       navigate('/dashboard')
       setFormData({
@@ -58,7 +74,7 @@ const Grievance = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.9 }}
     >
-      <div className="w-full max-w-lg p-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+      <div className="w-full max-w-lg p-8 bg-gray-300 dark:bg-gray-800 rounded-lg shadow-lg">
         <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-200 text-center mb-6">
           Submit Your Grievance
         </h2>
