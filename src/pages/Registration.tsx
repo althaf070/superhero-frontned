@@ -28,7 +28,7 @@ const Registration = ({ isRegister = false }: { isRegister?: boolean }) => {
       } else {
         await login(email, password);
       }
-     
+     setFormData({name:"",email:"",password:""})
       navigate('/');
     } catch (error) {
       console.error(error);

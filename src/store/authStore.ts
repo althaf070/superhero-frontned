@@ -102,7 +102,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
       throw error;
     }
   },
-
+// check if user is logged in
   checkAuth: async () => {
     set({ isCheckingAuth: true, error: null });
     try {

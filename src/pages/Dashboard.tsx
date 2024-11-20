@@ -4,7 +4,6 @@ import { SERVER_URL } from "@/lib/serverurl";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-// Define the Grievance type
 interface Grievance {
   _id: string;
   createdAt: string;
@@ -32,6 +31,7 @@ const Dashboard = () => {
       console.error("Error fetching grievances", error);
     }
   };
+  // changin color based on status
   const getStatusColor = (status: Grievance["status"]) => {
     switch (status) {
       case "Pending":
